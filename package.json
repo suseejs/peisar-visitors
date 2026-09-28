@@ -2,30 +2,55 @@
   "name": "@peisar/peisar-visitors",
   "version": "0.1.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "type": "module",
+  "main": "dist/index.cjs",
+  "types": "dist/index.d.cts",
+  "module": "dist/index.mjs",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "keywords": [],
+  "homepage": "https://github.com/suseejs/peisar-visitors#readme",
+  "bugs": {
+    "url": "https://github.com/suseejs/peisar-visitors/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/suseejs/peisar-visitors.git"
   },
-  "keywords": [],
-  "type": "module",
-  "bugs": {
-    "url": "https://github.com/suseejs/peisar-visitors/issues"
+  "files": [
+    "README.md",
+    "LICENSE",
+    "dist/**/*",
+    "package.json"
+  ],
+  "publishConfig": {
+    "access": "public"
   },
-  "homepage": "https://github.com/suseejs/peisar-visitors#readme",
-  "devDependencies": {
-    "@types/node": "^26.6.3",
-    "peisar": "^0.1.2",
-    "shiki": "^4.4.3",
-    "susee": "^2.3.0",
-    "typescript": "^7.0.2"
+  "scripts": {
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check",
+    "build": "susee build"
   },
   "dependencies": {
-    "@types/prismjs": "^1.26.6",
-    "highlight.js": "^11.12.0",
-    "prismjs": "^1.30.0"
+    "peisar": "^0.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.3",
+    "oxfmt": "^0.71.0",
+    "oxlint": "^1.86.0",
+    "susee": "^2.3.0",
+    "typescript": "^7.0.2"
   }
 }

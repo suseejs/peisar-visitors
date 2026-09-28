@@ -17,9 +17,7 @@ export type HighlighterFunction = (code: string, lang: any) => string;
  * @returns
  */
 function codeBlockWrapper(html: string, lang: any, preClass?: string): string {
-  const classNames = preClass
-    ? `language-${lang} ${preClass}`
-    : `language-${lang}`;
+  const classNames = preClass ? `language-${lang} ${preClass}` : `language-${lang}`;
   return `<pre class="${classNames}"><code>${html}</code></pre>`;
 }
 /**
@@ -55,9 +53,7 @@ export function highlightVisitor(
           // Fences with no language tag highlight as plain text.
           const lang = block.lang ?? "text";
           const highlighted = fn(block.code, lang);
-          const htmlString = shiki
-            ? highlighted
-            : codeBlockWrapper(highlighted, lang, preClass);
+          const htmlString = shiki ? highlighted : codeBlockWrapper(highlighted, lang, preClass);
           // Replace the code block with the highlighted HTML fragment,
           // keeping the original source span.
           return {

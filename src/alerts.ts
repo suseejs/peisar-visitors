@@ -33,13 +33,7 @@ import type { Visitor, Block, Span } from "peisar";
  * The `as const` is what turns this array into the literal union type
  * `Markers` below.
  */
-const markers = [
-  "[!NOTE]",
-  "[!TIP]",
-  "[!IMPORTANT]",
-  "[!WARNING]",
-  "[!CAUTION]",
-] as const;
+const markers = ["[!NOTE]", "[!TIP]", "[!IMPORTANT]", "[!WARNING]", "[!CAUTION]"] as const;
 
 /** Union of the recognized marker strings, e.g. `"[!NOTE]"`. */
 type Markers = (typeof markers)[number];
@@ -59,7 +53,7 @@ type Markers = (typeof markers)[number];
  * @returns The label without the `[!...]` wrapper, e.g. `"IMPORTANT"`.
  */
 function getLabel(mkr: Markers) {
-  const re = /^\[\!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]s*$/;
+  const re = /^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]s*$/;
   const m = mkr.match(re);
   return m?.[1] as string;
 }
