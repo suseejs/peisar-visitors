@@ -1,0 +1,31 @@
+{
+  "name": "@peisar/peisar-visitors",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suseejs/peisar-visitors.git"
+  },
+  "keywords": [],
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/suseejs/peisar-visitors/issues"
+  },
+  "homepage": "https://github.com/suseejs/peisar-visitors#readme",
+  "devDependencies": {
+    "@types/node": "^26.6.3",
+    "peisar": "^0.1.2",
+    "shiki": "^4.4.3",
+    "susee": "^2.3.0",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "@types/prismjs": "^1.26.6",
+    "highlight.js": "^11.12.0",
+    "prismjs": "^1.30.0"
+  }
+}
