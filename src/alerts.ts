@@ -101,12 +101,7 @@ function getColor(mkr: Markers) {
  * @param textPos - Source span to attach to the label text node.
  * @returns A `Paragraph` block that renders as a colored badge.
  */
-function badgeBlock(
-  mkr: Markers,
-  pos: Span,
-  textPos: Span,
-  restChild: Inline[] = [],
-): Block {
+function badgeBlock(mkr: Markers, pos: Span, textPos: Span): Block {
   const label = getLabel(mkr);
   const color = getColor(mkr);
 
@@ -130,7 +125,7 @@ function badgeBlock(
         ],
       ],
     },
-    children: [{ type: "Text", value: label, pos: textPos }, ...restChild],
+    children: [{ type: "Text", value: label, pos: textPos }],
     pos,
   };
 }
@@ -186,15 +181,33 @@ export function alertsVisitor(): Visitor {
                 marker.value as Markers, // Safe: validated by includes() above.
                 firstChild.pos,
                 marker.pos,
-                firstRestChild,
               );
               // Rebuild the quote: badge in place of the marker paragraph,
               // alert body preserved after it.
               const replacement: Block = {
                 type: "BlockQuote",
                 pos: block.pos,
-                children: [replaceBlock, ...restChild],
+                children: [replaceBlock],
               };
+              if (firstRestChild.length > 0) {
+                for (const child of firstRestChild) {
+                  if (
+                    child.type !== "SoftBreak" &&
+                    child.type !== "HardBreak" &&
+                    child.type !== "LinkReference"
+                  ) {
+                    const block: Block = {
+                      type: "Paragraph",
+                      children: [child],
+                      pos: child.pos,
+                    };
+                    replacement.children.push(block);
+                  }
+                }
+              }
+              for (const child of restChild) {
+                replacement.children.push(child);
+              }
               if (block.attrs) {
                 // Keep Kramdown attributes ({:#id .class key="val"}) intact.
                 replacement.attrs = block.attrs;

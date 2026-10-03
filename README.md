@@ -6,9 +6,6 @@
   <p>AST visitor hooks for Peisar</p>
 </div>
 
-> [!IMPORTANT]
-> This is important
-
 ## Install
 
 ```sh
