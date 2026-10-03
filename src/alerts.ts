@@ -21,7 +21,7 @@
  * console.log(peisar.html);
  * ```
  */
-import type { Visitor, Block, Span } from "peisar";
+import type { Visitor, Block, Span, Inline } from "peisar";
 
 /**
  * The alert markers recognized by {@link alertsVisitor}.
@@ -101,7 +101,12 @@ function getColor(mkr: Markers) {
  * @param textPos - Source span to attach to the label text node.
  * @returns A `Paragraph` block that renders as a colored badge.
  */
-function badgeBlock(mkr: Markers, pos: Span, textPos: Span): Block {
+function badgeBlock(
+  mkr: Markers,
+  pos: Span,
+  textPos: Span,
+  restChild: Inline[] = [],
+): Block {
   const label = getLabel(mkr);
   const color = getColor(mkr);
 
@@ -125,7 +130,7 @@ function badgeBlock(mkr: Markers, pos: Span, textPos: Span): Block {
         ],
       ],
     },
-    children: [{ type: "Text", value: label, pos: textPos }],
+    children: [{ type: "Text", value: label, pos: textPos }, ...restChild],
     pos,
   };
 }
@@ -176,10 +181,12 @@ export function alertsVisitor(): Visitor {
             ) {
               // The matched `[!NOTE]`-style text node.
               const marker = firstChild.children[0];
+              const firstRestChild = firstChild.children.slice(1);
               const replaceBlock = badgeBlock(
                 marker.value as Markers, // Safe: validated by includes() above.
                 firstChild.pos,
                 marker.pos,
+                firstRestChild,
               );
               // Rebuild the quote: badge in place of the marker paragraph,
               // alert body preserved after it.
